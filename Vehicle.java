@@ -6,8 +6,8 @@
 public abstract class Vehicle {
     private final String id;
     private double earnings;
-    private int numMiles;
-    private String[] passengers;
+    protected int numMiles;
+    protected String[] passengers;
 
     /**
      * Constructs for Vehicle.
@@ -78,7 +78,7 @@ public abstract class Vehicle {
      * Charges the ride by updating numMiles and earnings for multiple passengers.
      *
      * @param distance the distance to travel
-     * @param newPassengers the new passengers to add
+     * @param numPassangers the new passengers to add
      */
     public void chargeRide(int distance, int numPassangers) {
         if (canDrive(distance)) {
@@ -86,11 +86,15 @@ public abstract class Vehicle {
             this.earnings += calculateCost(distance) * numPassangers;
         }
     }
-     
+
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
         Vehicle vehicle = (Vehicle) obj;
         return numMiles == vehicle.numMiles && id.equals(vehicle.id);
     }
@@ -134,9 +138,5 @@ public abstract class Vehicle {
      */
     public String[] getPassengers() {
         return passengers;
-    }
-
-    public void setPassengers(String[] passengers) {
-        this.passengers =  passengers;
     }
 }
