@@ -1,5 +1,3 @@
-package HW03;
-
 /**
  * Represents a regular car in the transportation network and is a concrete subtype of Vehicle.
  * @version 1.0
@@ -35,8 +33,7 @@ public class Car extends Vehicle {
      * @param maxNumMiles the maximum number of miles that this car can travel before it is retired
      */
     public Car(String id, int numMiles, int maxNumMiles) {
-        this(id, numMiles, 10.0, 15.0, maxNumMiles);
-        setPassengers(4);
+        this(id, numMiles, new String[4], 10.0, 15.0, maxNumMiles);
     }
 
     /**
