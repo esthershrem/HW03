@@ -1,5 +1,3 @@
-package HW03;
-
 /**
  * Represents a regular bus in the transport network, such as a Georgia Tech
  * bus or a MARTA bus and is a concrete subtype of Vehicle.
@@ -18,9 +16,8 @@ public class Bus extends Vehicle {
      * @param location the location where the bus operates
      * @param stopsPerMile the number of stops per mile
      */
-    public Bus(String[] id, int numMiles, String location, int stopsPerMile) {
-        super(id, numMiles);
-        setPassengers(20);
+    public Bus(String id, int numMiles, String location, int stopsPerMile) {
+        super(id, numMiles, new String[20]);
         this.location = location;
         this.stopsPerMile = stopsPerMile;
     }
@@ -32,7 +29,7 @@ public class Bus extends Vehicle {
      * @param location the location where the bus operates
      */
     public Bus(String[] id, String location) {
-        this(id, 0, 2, setPassengers(20));
+        this(id, 0, new String[20], location, 2);
     }
 
     @Override
@@ -40,9 +37,10 @@ public class Bus extends Vehicle {
         return distance >= 0;
     }
 
+    @Override
     public double calculateCost(int distance) {
         if (canDrive(distance)) {
-            return (distance * 3) / stopsPerMiles;
+            return (distance * 3) / stopsPerMile;
         } else {
             return -1.0;
         }
@@ -64,8 +62,11 @@ public class Bus extends Vehicle {
     }
 
     @Override
-    public boolean equals() {
-        return getiID() == getNumMiles() == location == stopsPerMile;
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+        Bus bus = (Bus) obj;
+        return stopsPerMile == bus.stopsPerMile &&
+               location.equals(bus.location);
     }
 
     @Override
