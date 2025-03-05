@@ -1,5 +1,3 @@
-package HW03;
-
 /**
  * Represents a vehicle to get around the city.
  * @version 1.0
@@ -139,6 +137,6 @@ public abstract class Vehicle {
     }
 
     public void setPassengers(String[] passengers) {
-        this.passengers = passengers;
+        this.passengers =  passengers;
     }
 }
