@@ -93,10 +93,10 @@ public class Car extends Vehicle {
 
     @Override
     public String toString() {
-        return String.format("Car %s has travelled %d miles and has earned "
-        + "%.2f dollars. It can only drive %d miles. It costs %.2f "
-        + "dollars per mile and there is a one-time fee of %.2f dollars.",
-        getID(), getNumMiles(), getEarnings(), maxNumMiles, rate, fees);
+        return String.format("Car %s has travelled %d miles and has earned " +
+                "%.2f dollars. It can only drive %d miles. It costs %.2f " +
+                "dollars per mile to drive.",
+                getID(), getNumMiles(), getEarnings(), maxNumMiles, rate);
     }
 
     /**
