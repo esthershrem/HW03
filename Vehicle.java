@@ -70,7 +70,7 @@ public abstract class Vehicle {
      * @param distance the distance to travel
      */
     public void chargeRide(int distance) {
-        if (candrive(distance)) {
+        if (canDrive(distance)) {
             this.numMiles += distance;
             this.earnings += calculateCost(distance);
         }
@@ -88,18 +88,14 @@ public abstract class Vehicle {
             this.earnings += calculateCost(distance) * numPassangers;
         }
     }
-
+     
     @Override
-    public boolean equals() {
-        return this.id == this.numMiles;
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Vehicle vehicle = (Vehicle) obj;
+        return numMiles == vehicle.numMiles && id.equals(vehicle.id);
     }
-    // @Override
-    // public boolean equals(Object obj) {
-    //     if (this == obj) return true;
-    //     if (obj == null || getClass() != obj.getClass()) return false;
-    //     Vehicle vehicle = (Vehicle) obj;
-    //     return numMiles == vehicle.numMiles && id.equals(vehicle.id);
-    // }
 
     @Override
     public String toString() {
