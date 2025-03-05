@@ -1,5 +1,3 @@
-package HW03;
-
 /**
  * Class to test Car and Bus implementations.
  * @version 1.0
@@ -23,8 +21,8 @@ public class Driver {
         System.out.println("Are car1 and car2 equal? " + car1.equals(car2));
 
         // Create two Bus objects
-        Bus bus1 = new Bus("Bus1", 100, "Midtown", 3);
-        Bus bus2 = new Bus("Bus2", "Georgia Tech");
+        Bus bus1 = new Bus(new String[]{"Bus1"}, 100, "Midtown", 3);
+        Bus bus2 = new Bus(new String[]{"Bus2"}, "Georgia Tech");
 
         // Use addPassengers on bus1
         String[] busPassengers = {"Charlie", "Dave"};
