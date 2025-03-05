@@ -35,7 +35,8 @@ public class Car extends Vehicle {
      * @param maxNumMiles the maximum number of miles that this car can travel before it is retired
      */
     public Car(String id, int numMiles, int maxNumMiles) {
-        this(id, numMiles, setPassengers(4), 10.0, 15.0, maxNumMiles);
+        this(id, numMiles, 10.0, 15.0, maxNumMiles);
+        setPassengers(4);
     }
 
     /**
@@ -66,7 +67,7 @@ public class Car extends Vehicle {
             return false;
         }
         int availableSeats = 0;
-        for (String[] passenger : getPassengers()) {
+        for (String passenger : getPassengers()) {
             if (passenger == null) {
                 availableSeats++;
             }
@@ -85,16 +86,13 @@ public class Car extends Vehicle {
     }
 
     @Override
-    public boolean equals() {
-        return getID() == getNumMiles() == rate == fees == maxNumMiles;
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+        Car car = (Car) obj;
+        return Double.compare(car.rate, rate) == 0 &&
+                Double.compare(car.fees, fees) == 0 &&
+                maxNumMiles == car.maxNumMiles;
     }
-    // @Override
-    //     public boolean equals(Object obj) {
-    //         if (!super.equals(obj)) return false;
-    //         Car car = (Car) obj;
-    //         return Double.compare(car.rate, rate) == 0 &&
-    //                 Double.compare(car.fees, fees) == 0 &&
-    //                 maxNumMiles == car.maxNumMiles;
 
     @Override
     public String toString() {
