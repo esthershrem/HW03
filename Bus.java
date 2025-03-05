@@ -1,49 +1,61 @@
 /**
- * Represents a regular bus in the transport network, such as a Georgia Tech
- * bus or a MARTA bus and is a concrete subtype of Vehicle.
+ * Represents a regular car in the transportation network and is a concrete subtype of Vehicle.
  * @version 1.0
  * @author Esther Shrem
  */
-public class Bus extends Vehicle {
-    private String location;
-    private int stopsPerMile;
+public class Car extends Vehicle {
+    private double rate;
+    private double fees;
+    private int maxNumMiles;
 
     /**
-     * Constructor for Bus.
+     * Constructs for Car.
      *
-     * @param id the identifier of the bus
-     * @param numMiles the number of miles the bus has travelled
-     * @param location the location where the bus operates
-     * @param stopsPerMile the number of stops per mile
+     * @param id the identifier of this vehicle
+     * @param numMiles the number of miles this vehicle has travelled
+     * @param passengers the passengers aboard this vehicle
+     * @param rate the cost of using this car to travel one mile
+     * @param fees the fee charge to the ride to use this car once
+     * @param maxNumMiles the maximum number of miles that this car can travel before it is retired
      */
-    public Bus(String id, int numMiles, String location, int stopsPerMile) {
-        super(id, numMiles, new String[20]);
-        this.location = location;
-        this.stopsPerMile = stopsPerMile;
+    public Car(String id, int numMiles, String[] passengers, double rate, double fees, int maxNumMiles) {
+        super(id, numMiles, passengers);
+        this.rate = rate;
+        this.fees = fees;
+        this.maxNumMiles = maxNumMiles;
     }
 
     /**
-     * Constructor for Bus.
+     * Constructs for Car.
      *
-     * @param id the identifier of the bus
-     * @param location the location where the bus operates
+     * @param id the identifier of this vehicle
+     * @param numMiles the number of miles this vehicle has travelled
+     * @param maxNumMiles the maximum number of miles that this car can travel before it is retired
      */
-    public Bus(String id, String location) {
-        this(id, 0, location, 2);
+    public Car(String id, int numMiles, int maxNumMiles) {
+        this(id, numMiles, new String[4], 10.0, 15.0, maxNumMiles);
+    }
+
+    /**
+     * Constructs for Car.
+     *
+     * @param id the identifier of this vehicle
+     */
+    public Car(String id) {
+        this(id, 0, 200);
     }
 
     @Override
     public boolean canDrive(int distance) {
-        return distance >= 0;
+        return distance >= 0 && (getNumMiles() + distance) <= maxNumMiles;
     }
 
     @Override
     public double calculateCost(int distance) {
-        if (canDrive(distance)) {
-            return (distance * 3) / stopsPerMile;
-        } else {
+        if (!canDrive(distance) || distance < 0) {
             return -1.0;
         }
+        return (distance * rate) + fees;
     }
 
     @Override
@@ -51,14 +63,22 @@ public class Bus extends Vehicle {
         if (!canDrive(distance)) {
             return false;
         }
-
+        int availableSeats = 0;
+        for (String passenger : getPassengers()) {
+            if (passenger == null) {
+                availableSeats++;
+            }
+        }
+        if (newPassengers.length > availableSeats) {
+            return false;
+        }
         int index = 0;
         for (int i = 0; i < getPassengers().length && index < newPassengers.length; i++) {
             if (getPassengers()[i] == null) {
                 getPassengers()[i] = newPassengers[index++];
-                chargeRide(distance, 1);
             }
         }
+        chargeRide(distance);
         return true;
     }
 
@@ -67,33 +87,44 @@ public class Bus extends Vehicle {
         if (!super.equals(obj)) {
             return false;
         }
-        Bus bus = (Bus) obj;
-        return stopsPerMile == bus.stopsPerMile
-               && location.equals(bus.location);
+        Car car = (Car) obj;
+        return Double.compare(car.rate, rate) == 0
+                && Double.compare(car.fees, fees) == 0
+                && maxNumMiles == car.maxNumMiles;
     }
 
     @Override
     public String toString() {
-        return String.format("Bus %s has travelled %d miles and has earned %.2f dollars. "
-                + "This bus drives around %s and makes %d stops per mile.",
-                getID(), getNumMiles(), getEarnings(), location, stopsPerMile);
+        return String.format("Car %s has travelled %d miles and has earned %d dollars. "
+            + "It can only drive %d miles. It costs %.2f dollars per mile and there is "
+            + "a one-time fee of %.2f dollars.",
+            getID(), getNumMiles(), getEarnings(), maxNumMiles, rate, fees);
     }
 
     /**
-     * Gets the location where the bus operates.
+     * Gets the cost of using this car to travel one mile.
      *
-     * @return the location where the bus operates
+     * @return the cost of using this car to travel one mile
      */
-    public String getLocation() {
-        return location;
+    public double getRate() {
+        return rate;
     }
 
     /**
-     * Gets the number of stops per mile.
+     * Gets the fee charge to the ride to use this car once.
      *
-     * @return the number of stops per mile
+     * @return the fee charge to the ride to use this car once
      */
-    public int getStopsPerMile() {
-        return stopsPerMile;
+    public double getFees() {
+        return fees;
+    }
+
+    /**
+     * Gets the maximum number of miles that this car can travel before it is retired.
+     *
+     * @return the maximum number of miles that this car can travel before it is retired
+     */
+    public int getMaxNumMiles() {
+        return maxNumMiles;
     }
 }
