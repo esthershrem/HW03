@@ -28,8 +28,8 @@ public class Bus extends Vehicle {
      * @param id the identifier of the bus
      * @param location the location where the bus operates
      */
-    public Bus(String[] id, String location) {
-        this(id, 0, new String[20], location, 2);
+    public Bus(String id, String location) {
+        this(id, 0, location, 2);
     }
 
     @Override
