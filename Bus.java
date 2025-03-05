@@ -2,7 +2,7 @@
  * Represents a regular bus in the transport network, such as a Georgia Tech
  * bus or a MARTA bus and is a concrete subtype of Vehicle.
  * @version 1.0
- * author Esther Shrem
+ * @author Esther Shrem
  */
 public class Bus extends Vehicle {
     private String location;
@@ -46,6 +46,7 @@ public class Bus extends Vehicle {
         }
     }
 
+    @Override
     public boolean addPassengers(int distance, String[] newPassengers) {
         if (!canDrive(distance)) {
             return false;
@@ -63,16 +64,18 @@ public class Bus extends Vehicle {
 
     @Override
     public boolean equals(Object obj) {
-        if (!super.equals(obj)) return false;
+        if (!super.equals(obj)) {
+            return false;
+        }
         Bus bus = (Bus) obj;
-        return stopsPerMile == bus.stopsPerMile &&
-               location.equals(bus.location);
+        return stopsPerMile == bus.stopsPerMile
+               && location.equals(bus.location);
     }
 
     @Override
     public String toString() {
-        return String.format("Bus %s has travelled %d miles and has earned %.2f dollars. " +
-                "This bus drives around %s and makes %d stops per mile.",
+        return String.format("Bus %s has travelled %d miles and has earned %.2f dollars. "
+                + "This bus drives around %s and makes %d stops per mile.",
                 getID(), getNumMiles(), getEarnings(), location, stopsPerMile);
     }
 
@@ -86,7 +89,7 @@ public class Bus extends Vehicle {
     }
 
     /**
-     * Gets the number of stops per mile
+     * Gets the number of stops per mile.
      *
      * @return the number of stops per mile
      */
